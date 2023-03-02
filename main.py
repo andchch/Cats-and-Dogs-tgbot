@@ -34,7 +34,7 @@ def get_url(who):
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     bot.send_message(message.chat.id,
-                     'Привет, я - самый полезный бот в этой штуке под названием телеграм')
+                     'Привет, я - самый полезный бот в тг')
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     dog_btn = types.KeyboardButton('Dog')
     cat_btn = types.KeyboardButton('Cat')
