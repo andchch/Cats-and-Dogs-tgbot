@@ -7,7 +7,7 @@ from telebot import types
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-key', type=str, help='Bot API key')
+parser.add_argument('key', type=str)
 args = parser.parse_args()
 
 

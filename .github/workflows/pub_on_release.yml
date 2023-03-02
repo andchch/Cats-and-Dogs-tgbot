@@ -7,8 +7,6 @@ on:
 jobs:
   build_and_pub:
     runs-on: ubuntu-latest
-    env:
-      REPO: ${{ secrets.DOCKER_NAME }}
 
     steps:
       - name: Login to docker.io
@@ -16,14 +14,17 @@ jobs:
       - uses: actions/checkout@master
 
       - name: Build image
-        run: docker build -t $REPO:${GITHUB_REF_NAME} -f Dockerfile --build-arg TOKEN=${{ secrets.BOT_API_KEY }} .
+        run: docker build -t ${{ secrets.DOCKER_REPO }}:${GITHUB_REF_NAME} -f Dockerfile --build-arg token=${{ secrets.BOT_API_KEY }} .
 
       - name: Push image to docker.io
-        run: docker push $REPO:${GITHUB_REF_NAME}
+        run: docker push ${{ secrets.DOCKER_REPO }}:${GITHUB_REF_NAME}
         
   deploy:
     needs: [ build_and_pub ]
     runs-on: ubuntu-latest
+
     steps:
+      - name: Set the value
+        run: echo "tag=${GITHUB_REF_NAME}" >> $GITHUB_ENV
       - name: Send webhook for deploy
-        run: "curl --silent --show-error --fail -X POST ${{ secrets.DEPLOYMENT_SERVER }} -H 'Authorization: ${{ secrets.CI_TOKEN }}' -H 'Content-Type: application/json' -d '{\"owner\": \"${{ secrets.DOCKER_LOGIN }}\", \"repository\": \"${{ secrets.DOCKER_NAME }}\", \"tag\": \"${GITHUB_REF_NAME}\", \"ports\": {\"8080\": 8080}}'"
+        run: "curl --silent --show-error --fail -X POST ${{ secrets.DEPLOYMENT_SERVER }} -H 'Authorization: ${{ secrets.CI_TOKEN }}' -H 'Content-Type: application/json' -d '{\"owner\": \"${{ secrets.DOCKER_LOGIN }}\", \"repository\": \"${{ secrets.DOCKER_NAME }}\", \"tag\": \"${{ env.tag }}\"}'"
