@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REPO: ${{ secrets.DOCKER_NAME }}
-      TAG: $(date +%s)
+      TAG: $GITHUB_REF_NAME
 
     steps:
       - name: Login to docker.io
