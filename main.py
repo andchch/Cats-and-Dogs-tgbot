@@ -12,7 +12,6 @@ args = parser.parse_args()
 
 
 bot = telebot.TeleBot(args.key)
-photo = ['jpg', 'jpeg', 'png']
 
 
 def get_url(who):
@@ -20,7 +19,7 @@ def get_url(who):
         url = requests.get('https://random.dog/woof.json').json()['url']
         file_extension = re.search("([^.]*)$", url).group(1).lower()
         return url, file_extension
-    elif who == 'Cat':
+    if who == 'Cat':
         typecat = random.randint(0, 1)
         if typecat == 0:
             url = 'https://cataas.com' + requests.get('https://cataas.com/cat?json=true').json()[
