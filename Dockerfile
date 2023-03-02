@@ -4,5 +4,8 @@ FROM python:3.11-alpine
 COPY ./ /app
 # Устанавливаем все зависимости
 RUN apk update && pip install -r /app/requirements.txt --no-cache-dir
+
+ARG TOKEN
+
 # Запуск нашего приложения при старте контейнера
-ENTRYPOINT ["python", "/app/main.py"]
+ENTRYPOINT ["python", "/app/main.py", "--build-arg", "TOKEN=$TOKEN"]
