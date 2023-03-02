@@ -1,8 +1,17 @@
-import telebot, requests, re, random
+import random
+import argparse
+import re
+import requests
+import telebot
 from telebot import types
 
 
-bot = telebot.TeleBot(API_TOKEN)
+parser = argparse.ArgumentParser()
+parser.add_argument('-key', type=str, help='Bot API key')
+args = parser.parse_args()
+
+
+bot = telebot.TeleBot(args.key)
 photo = ['jpg', 'jpeg', 'png']
 
 
@@ -14,15 +23,18 @@ def get_url(who):
     elif who == 'Cat':
         typecat = random.randint(0, 1)
         if typecat == 0:
-            url = 'https://cataas.com' + requests.get('https://cataas.com/cat?json=true').json()['url']
+            url = 'https://cataas.com' + requests.get('https://cataas.com/cat?json=true').json()[
+                'url']
         else:
-            url = 'https://cataas.com' + requests.get('https://cataas.com/cat/gif?json=true').json()['url']
+            url = 'https://cataas.com' + \
+                  requests.get('https://cataas.com/cat/gif?json=true').json()['url']
         return url, typecat
 
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.send_message(message.chat.id, 'Привет, я - самый полезный бот в этой штуке под названием телеграм')
+    bot.send_message(message.chat.id,
+                     'Привет, я - самый полезный бот в этой штуке под названием телеграм')
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     dog_btn = types.KeyboardButton('Dog')
     cat_btn = types.KeyboardButton('Cat')
