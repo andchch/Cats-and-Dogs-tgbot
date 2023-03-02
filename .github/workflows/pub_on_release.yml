@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@master
 
       - name: Build image
-        run: docker build -t $REPO:${GITHUB_REF_NAME} -f Dockerfile --build-arg TOKEN=${{ secrets.BOT_API_KEY }} .
+        run: docker build -t $REPO:${GITHUB_REF_NAME} -f Dockerfile --build-arg token=${{ secrets.BOT_API_KEY }} .
 
       - name: Push image to docker.io
         run: docker push $REPO:${GITHUB_REF_NAME}
@@ -26,4 +26,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send webhook for deploy
-        run: "curl --silent --show-error --fail -X POST ${{ secrets.DEPLOYMENT_SERVER }} -H 'Authorization: ${{ secrets.CI_TOKEN }}' -H 'Content-Type: application/json' -d '{\"owner\": \"${{ secrets.DOCKER_LOGIN }}\", \"repository\": \"${{ secrets.DOCKER_NAME }}\", \"tag\": \"${GITHUB_REF_NAME}\", \"ports\": {\"8080\": 8080}}'"
+        run: "curl --silent --show-error --fail -X POST ${{ secrets.DEPLOYMENT_SERVER }} -H 'Authorization: ${{ secrets.CI_TOKEN }}' -H 'Content-Type: application/json' -d '{\"owner\": \"${{ secrets.DOCKER_LOGIN }}\", \"repository\": \"${{ secrets.DOCKER_NAME }}\", \"tag\": \"${GITHUB_REF_NAME}\"}'"

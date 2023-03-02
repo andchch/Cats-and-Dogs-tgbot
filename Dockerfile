@@ -5,7 +5,7 @@ COPY ./ /app
 # Устанавливаем все зависимости
 RUN apk update && pip install -r /app/requirements.txt --no-cache-dir
 # Устанавливаем аргумент при сборке
-ARG TOKEN
-
+ARG token
+ENV token=${token}
 # Запуск нашего приложения при старте контейнера
-ENTRYPOINT ["python", "/app/main.py", "--build-arg", "TOKEN=$TOKEN"]
+CMD python /app/main.py ${token}
