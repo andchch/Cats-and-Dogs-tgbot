@@ -1,9 +1,8 @@
 name: Release check, build and deploy
 on:
- pull_request:
-   types: [closed]
-   branches:
-    - 'main'
+ release:
+   types: [published]
+
 
 jobs:
   build_and_pub:
