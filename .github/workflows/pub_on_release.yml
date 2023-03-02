@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@master
 
       - name: Build image
-        run: docker build -t ${DOCKER_REPO}:${GITHUB_REF_NAME} -f Dockerfile --build-arg token=${{ secrets.BOT_API_KEY }} .
+        run: docker build -t ${{ secrets.DOCKER_REPO }}:${GITHUB_REF_NAME} -f Dockerfile --build-arg token=${{ secrets.BOT_API_KEY }} .
 
       - name: Push image to docker.io
         run: docker push $REPO:${GITHUB_REF_NAME}
