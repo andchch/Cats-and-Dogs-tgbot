@@ -17,10 +17,10 @@ jobs:
       - uses: actions/checkout@master
 
       - name: Build image
-        run: docker build -t $REPO:${{ GITHUB_REF_NAME }} -f Dockerfile --build-arg TOKEN=test .
+        run: docker build -t $REPO:${ GITHUB_REF_NAME } -f Dockerfile --build-arg TOKEN=test .
 
       - name: Push image to docker.io
-        run: docker push $REPO:${{ GITHUB_REF_NAME }}
+        run: docker push $REPO:${ GITHUB_REF_NAME }
 
 
   deploy:
