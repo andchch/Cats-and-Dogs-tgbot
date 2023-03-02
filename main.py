@@ -22,12 +22,7 @@ def get_url(who):
     if who == 'Cat':
         typecat = random.randint(0, 1)
         if typecat == 0:
-            url = 'https://cataas.com' + requests.get('https://cataas.com/cat?json=true').json()[
-                'url']
-        else:
-            url = 'https://cataas.com' + \
-                  requests.get('https://cataas.com/cat/gif?json=true').json()['url']
-        return url, typecat
+
 
 
 @bot.message_handler(commands=['start'])
